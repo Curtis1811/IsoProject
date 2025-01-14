@@ -18,23 +18,23 @@ namespace LevelUp
                 public int TargetLevel;
                 public float ExperienceForThisLevel;
             }
-            
+
             public List<Level> LevelBracketsList;
-            
+
             public LevelBrackets(float experienceForLevel, float experienceMultiplierPerLevel, int maxLevel)
             {
                 ConstructLevelUpData(experienceForLevel, experienceMultiplierPerLevel, maxLevel);
             }
-            
+
             public Level GetCurrentLevelBracket(int level)
             {
                 return LevelBracketsList[level];
             }
-            
+
             private void ConstructLevelUpData(float experienceForLevel, float experienceMultiplierPerLevel, int maxLevel)
             {
                 LevelBracketsList = new List<Level>();
-            
+
                 for (int i = 0; i < maxLevel; i++)
                 {
                     if (i == 0)
@@ -65,11 +65,11 @@ namespace LevelUp
 
                 }
             }
-            
+
         }
-        
+
         #endregion
-            
+
         #region Constructors
         LevelUpHandler(float experienceForLevel, float experienceMultiplierPerLevel, int maxLevel,
             int startingLevel = 0)
@@ -78,24 +78,24 @@ namespace LevelUp
             _maxLevel = maxLevel;
             SetLevel(startingLevel);
         }
-       #endregion
-       
+        #endregion
+
         public int GetLevel()
         {
             return _level;
         }
-        
+
         public float GetCurrentExperience()
         {
             return _experiencePoints;
         }
-        
+
         void LevelUp(float experienceToRemove = 0.0f)
         {
-            _experiencePoints =- experienceToRemove;
-            _level =+ 1;
+            _experiencePoints = -experienceToRemove;
+            _level = +1;
         }
-        
+
         public int SetLevel(int targetLevel)
         {
             if (targetLevel < 0)
@@ -112,24 +112,24 @@ namespace LevelUp
             }
 
             _experiencePoints = 0;
-            
+
             return _level;
         }
-        
+
         void GainExperience(float experiencePoints, bool canLevelUp = true)
         {
-            _experiencePoints =+ experiencePoints;
+            _experiencePoints = +experiencePoints;
             if (canLevelUp)
-            { 
+            {
                 CheckForLevelUp();
             }
-           
+
         }
-        
+
         public bool CheckForLevelUp()
         {
             var experienceForNextLevel = StoredLevelBrackets.GetCurrentLevelBracket(_level).ExperienceForThisLevel;
-            
+
             if (_level != _maxLevel
                 && _experiencePoints >= experienceForNextLevel)
             {
